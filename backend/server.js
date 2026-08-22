@@ -1,0 +1,38 @@
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const notesRouter = require('./routes/notes');
+const logger = require('./middleware/logger');
+const errorHandler = require('./middleware/errorHandler');
+
+const app = express();
+
+// Middleware
+app.use(cors());
+app.use(express.json()); // Parses JSON bodies
+app.use(logger); // Custom logging middleware
+
+// Routes
+app.use('/api/notes', notesRouter);
+
+// Error Handling Middleware
+app.use(errorHandler);
+
+// Connect to MongoDB
+const PORT = process.env.PORT || 5000;
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/notes-app';
+
+mongoose.connect(MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log('Connected to MongoDB');
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+})
+.catch((err) => {
+  console.error('Failed to connect to MongoDB', err);
+});
