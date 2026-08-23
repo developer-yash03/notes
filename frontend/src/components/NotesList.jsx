@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import NoteItem from './NoteItem';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/notes';
+
 const NotesList = () => {
   const [notes, setNotes] = useState([]);
   const [error, setError] = useState(null);
@@ -11,7 +13,7 @@ const NotesList = () => {
 
   const fetchNotes = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/notes');
+      const response = await fetch(API_URL);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -24,7 +26,7 @@ const NotesList = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/notes/${id}`, {
+      const response = await fetch(`${API_URL}/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/notes';
+
 const NoteForm = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -18,7 +20,7 @@ const NoteForm = () => {
 
   const fetchNote = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/notes/${id}`);
+      const response = await fetch(`${API_URL}/${id}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -35,8 +37,8 @@ const NoteForm = () => {
     
     const noteData = { title, content };
     const url = isEditing 
-      ? `http://localhost:5000/api/notes/${id}` 
-      : 'http://localhost:5000/api/notes';
+      ? `${API_URL}/${id}` 
+      : API_URL;
     const method = isEditing ? 'PUT' : 'POST';
 
     try {
