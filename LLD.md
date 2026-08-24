@@ -90,7 +90,7 @@ All endpoints are prefixed with `/api/notes`.
     +-----------------+       +-----------------+
     |  NotesList.jsx  |       |   NoteForm.jsx  |
     |  (State: notes, |       |  (State: title, |
-    |   error)        |       |   content, err) |
+    |   search, toast)|       |   content, err) |
     +--------+--------+       +-----------------+
              |
              v
@@ -104,25 +104,30 @@ All endpoints are prefixed with `/api/notes`.
 ### 4.1. `NotesList.jsx`
 - **State:**
   - `notes`: `Array<Note>` — Array of active notes.
+  - `searchTerm` / `debouncedSearch`: `string` — Search filter powered by debounced closure.
+  - `toast`: `{ message, visible }` — Toast state governed by microtask/macrotask timing.
   - `error`: `String | null` — Error feedback for failed requests.
-- **Key Methods:**
-  - `fetchNotes()`: Invoked on component mount via `useEffect()`. Uses `async/await` to perform `GET /api/notes`.
-  - `handleDelete(id)`: Invokes `DELETE /api/notes/:id`, filters deleted note out of `notes` state.
 
 ### 4.2. `NoteItem.jsx`
 - **Props:**
   - `note`: `{ _id, title, content, createdAt }`
   - `onDelete`: `(id: string) => void`
-- **Description:** Pure presentational component that displays note cards and triggers edit navigation or delete action.
+- **Hoisting Demo:** Calls hoisted functions (`formatNoteDate`, `calculateReadingTime`) via `processNoteMetadata`.
 
 ### 4.3. `NoteForm.jsx`
 - **State:**
   - `title`: `string` — Controlled form field.
   - `content`: `string` — Controlled form field.
   - `error`: `string | null` — Form error feedback.
-- **Routing Parameters:**
-  - Uses `useParams()` to inspect `:id`.
-  - If `id` is present, operates in **Edit Mode** (fetches note via `GET /api/notes/:id` on mount; submits via `PUT /api/notes/:id`).
-  - If `id` is absent, operates in **Create Mode** (submits via `POST /api/notes`).
-- **Navigation:**
-  - Redirects to `/` on successful submission using `useNavigate()`.
+- **Promises vs Callbacks Demo:** Imports JSON backup using `readNoteFileWithPromise` wrapping `FileReader` callbacks.
+
+---
+
+## 5. Core JavaScript Concepts Implementation
+
+| Concept | Location | Implementation Mechanism |
+| :--- | :--- | :--- |
+| **Closures** | `utils/helpers.js` (`createDebouncedSearch`, `createStatsTracker`) | Retains persistent lexical scope access across executions (e.g. `timeoutId` and private `actionCount`). |
+| **Event Loop** | `utils/helpers.js` (`scheduleToastNotification`) | Leverages `queueMicrotask` (Microtask Queue) for immediate state prep before repaint, and `setTimeout` (Macrotask Queue) for deferred auto-dismissal. |
+| **Hoisting** | `utils/helpers.js` (`processNoteMetadata`) | Invokes function declarations (`formatNoteDate`, `calculateReadingTime`) before their formal declaration in the file. |
+| **Promises vs Callbacks** | `utils/helpers.js` (`readNoteFileWithPromise`) | Converts legacy callback-driven `FileReader` APIs (`onload`, `onerror`) into modern async/await compatible `Promise`. |
