@@ -9,7 +9,6 @@ const API_BASE = import.meta.env.VITE_API_URL
 const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
 const Register = () => {
-  // Controlled inputs state
   const [formData, setFormData] = useState({
     name: '',
     age: '',
@@ -24,7 +23,6 @@ const Register = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  // Controlled input change handler
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -32,14 +30,12 @@ const Register = () => {
       [name]: value,
     }));
 
-    // Clear inline error on typing
     if (fieldErrors[name]) {
       setFieldErrors((prev) => ({ ...prev, [name]: '' }));
     }
     if (serverError) setServerError(null);
   };
 
-  // Client-side Form Validation
   const validateForm = () => {
     const errors = {};
     const trimmedName = formData.name.trim();
@@ -68,7 +64,6 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 1. Client-side validation check
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
@@ -78,7 +73,6 @@ const Register = () => {
     setIsLoading(true);
     setServerError(null);
 
-    // 2. Input Sanitization: Trim strings and format email
     const sanitizedPayload = {
       name: formData.name.trim(),
       age: parseInt(formData.age, 10),
@@ -101,7 +95,6 @@ const Register = () => {
         throw new Error(data.error || 'Registration failed. Please try again.');
       }
 
-      // 3. JWT Handling: Save token and log user in
       login(data.token, data.user);
       navigate('/');
     } catch (err) {
@@ -126,7 +119,6 @@ const Register = () => {
       )}
 
       <form onSubmit={handleSubmit} className="auth-form" noValidate>
-        {/* Name Input */}
         <div className="form-group">
           <label htmlFor="name">Full Name</label>
           <input
@@ -143,7 +135,6 @@ const Register = () => {
           {fieldErrors.name && <span className="field-error-msg">{fieldErrors.name}</span>}
         </div>
 
-        {/* Age Input */}
         <div className="form-group">
           <label htmlFor="age">Age</label>
           <input
@@ -161,7 +152,6 @@ const Register = () => {
           {fieldErrors.age && <span className="field-error-msg">{fieldErrors.age}</span>}
         </div>
 
-        {/* Email Input */}
         <div className="form-group">
           <label htmlFor="email">Email Address</label>
           <input
@@ -177,7 +167,6 @@ const Register = () => {
           {fieldErrors.email && <span className="field-error-msg">{fieldErrors.email}</span>}
         </div>
 
-        {/* Password Input */}
         <div className="form-group">
           <label htmlFor="password">Password (min 6 chars)</label>
           <input
@@ -193,7 +182,6 @@ const Register = () => {
           {fieldErrors.password && <span className="field-error-msg">{fieldErrors.password}</span>}
         </div>
 
-        {/* Submit Button with Loading State */}
         <button type="submit" className="btn-primary btn-full" disabled={isLoading}>
           {isLoading ? (
             <span className="btn-loading-content">

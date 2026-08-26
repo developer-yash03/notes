@@ -9,19 +9,15 @@ const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
-// Middleware
 app.use(cors());
-app.use(express.json()); // Parses JSON bodies
-app.use(logger); // Custom logging middleware
+app.use(express.json());
+app.use(logger);
 
-// Routes
 app.use('/api/notes', notesRouter);
 app.use('/api/auth', authRouter);
 
-// Error Handling Middleware
 app.use(errorHandler);
 
-// Connect to MongoDB
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/notes-app';
 

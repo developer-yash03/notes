@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, NavLink, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import NotesList from './components/NotesList';
 import NoteForm from './components/NoteForm';
 import Register from './components/Register';
@@ -70,7 +70,6 @@ function App() {
         <div className="app-layout">
           <Navigation />
 
-          {/* Main Content Area */}
           <main className="main-content">
             <Routes>
               <Route path="/" element={<NotesList />} />
@@ -81,7 +80,6 @@ function App() {
             </Routes>
           </main>
 
-          {/* Compact Footer */}
           <footer className="footer">
             <p>
               Full-Stack React & Express Notes App • Demonstrating Authentication, JWT, Password Hashing, Input Sanitization & Validations

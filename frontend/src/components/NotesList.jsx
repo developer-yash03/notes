@@ -9,7 +9,6 @@ import {
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/notes';
 
-// Instantiate session tracker using Closures
 const sessionTracker = createStatsTracker();
 
 const NotesList = () => {
@@ -20,7 +19,6 @@ const NotesList = () => {
   const [error, setError] = useState(null);
   const [toast, setToast] = useState({ message: '', visible: false });
 
-  // 1. CLOSURE DEMO: createDebouncedSearch creates a closure over timerId
   const debouncedHandler = useRef(
     createDebouncedSearch((query) => {
       setDebouncedSearch(query);
@@ -30,7 +28,7 @@ const NotesList = () => {
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
-    debouncedHandler(value); // Calls closed-over debounced search function
+    debouncedHandler(value);
   };
 
   useEffect(() => {
@@ -67,7 +65,6 @@ const NotesList = () => {
       
       setNotes(prevNotes => prevNotes.filter(note => note._id !== id));
       
-      // 2. EVENT LOOP DEMO: Schedule toast using microtasks + macrotasks
       const statusMsg = sessionTracker.trackAction('Deleted Note');
       scheduleToastNotification(`Note removed successfully! • ${statusMsg}`, setToast);
     } catch (err) {
@@ -75,7 +72,6 @@ const NotesList = () => {
     }
   };
 
-  // Filter notes based on debounced search term
   const filteredNotes = useMemo(() => {
     if (!debouncedSearch.trim()) return notes;
     const term = debouncedSearch.toLowerCase();
@@ -84,7 +80,6 @@ const NotesList = () => {
     );
   }, [notes, debouncedSearch]);
 
-  // Export notes as JSON using Promise
   const handleExport = () => {
     const blob = new Blob([JSON.stringify(notes, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -98,7 +93,6 @@ const NotesList = () => {
 
   return (
     <div className="notes-container">
-      {/* Toast Notification Banner (Driven by Event Loop timing) */}
       {toast.visible && (
         <div className="toast-notification" role="status">
           <span className="toast-icon">✨</span>
@@ -106,13 +100,12 @@ const NotesList = () => {
         </div>
       )}
 
-      {/* Control Bar: Search & Quick Actions */}
       <div className="control-bar">
         <div className="search-box">
           <span className="search-icon">🔍</span>
           <input
             type="text"
-            placeholder="Search notes (debounced with closures)..."
+            placeholder="Search notes..."
             value={searchTerm}
             onChange={handleSearchChange}
             aria-label="Search notes"
@@ -137,7 +130,6 @@ const NotesList = () => {
         </div>
       </div>
 
-      {/* Info Status Banner */}
       <div className="status-strip">
         <span className="count-pill">
           {filteredNotes.length} {filteredNotes.length === 1 ? 'note' : 'notes'} found
@@ -149,7 +141,6 @@ const NotesList = () => {
         )}
       </div>
 
-      {/* Content Rendering */}
       {error && (
         <div className="error-alert">
           <strong>Error:</strong> {error}

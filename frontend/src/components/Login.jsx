@@ -9,7 +9,6 @@ const API_BASE = import.meta.env.VITE_API_URL
 const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
 const Login = () => {
-  // Controlled inputs state
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -62,7 +61,6 @@ const Login = () => {
     setIsLoading(true);
     setServerError(null);
 
-    // Input sanitization
     const sanitizedPayload = {
       email: formData.email.trim().toLowerCase(),
       password: formData.password,
@@ -83,7 +81,6 @@ const Login = () => {
         throw new Error(data.error || 'Invalid credentials. Please try again.');
       }
 
-      // JWT verification and storage via Auth Context
       login(data.token, data.user);
       navigate('/');
     } catch (err) {
@@ -108,7 +105,6 @@ const Login = () => {
       )}
 
       <form onSubmit={handleSubmit} className="auth-form" noValidate>
-        {/* Email Input */}
         <div className="form-group">
           <label htmlFor="email">Email Address</label>
           <input
@@ -125,7 +121,6 @@ const Login = () => {
           {fieldErrors.email && <span className="field-error-msg">{fieldErrors.email}</span>}
         </div>
 
-        {/* Password Input */}
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
@@ -141,7 +136,6 @@ const Login = () => {
           {fieldErrors.password && <span className="field-error-msg">{fieldErrors.password}</span>}
         </div>
 
-        {/* Submit Button with Loading State */}
         <button type="submit" className="btn-primary btn-full" disabled={isLoading}>
           {isLoading ? (
             <span className="btn-loading-content">

@@ -70,22 +70,15 @@ const NoteForm = () => {
     }
   };
 
-  /**
-   * 4. PROMISES VS CALLBACKS DEMO:
-   * Uses `readNoteFileWithPromise` which refactors callback-driven FileReader
-   * into modern async/await Promise consumption!
-   */
   const handleImportJson = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     try {
-      // Async/await consumption of Promise-wrapped callback FileReader
       const fileContent = await readNoteFileWithPromise(file);
       const parsedData = JSON.parse(fileContent);
 
       if (Array.isArray(parsedData) && parsedData.length > 0) {
-        // If an array backup was provided, pick the first note
         setTitle(parsedData[0].title || '');
         setContent(parsedData[0].content || '');
       } else if (parsedData.title && parsedData.content) {
@@ -102,7 +95,6 @@ const NoteForm = () => {
     }
   };
 
-  // Keyboard shortcut: Ctrl+Enter or Cmd+Enter to save
   const handleKeyDown = (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       handleSubmit(e);

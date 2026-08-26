@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Note = require('../models/Note');
 
-// Get all notes
 router.get('/', async (req, res, next) => {
   try {
     const notes = await Note.find().sort({ createdAt: -1 });
@@ -12,7 +11,6 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-// Get a single note
 router.get('/:id', async (req, res, next) => {
   try {
     const note = await Note.findById(req.params.id);
@@ -25,7 +23,6 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-// Create a new note
 router.post('/', async (req, res, next) => {
   try {
     const { title, content } = req.body;
@@ -40,7 +37,6 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-// Update a note
 router.put('/:id', async (req, res, next) => {
   try {
     const { title, content } = req.body;
@@ -58,14 +54,13 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 
-// Delete a note
 router.delete('/:id', async (req, res, next) => {
   try {
     const note = await Note.findByIdAndDelete(req.params.id);
     if (!note) {
       return res.status(404).json({ error: 'Note not found' });
     }
-    res.status(204).send(); // 204 No Content
+    res.status(204).send();
   } catch (error) {
     next(error);
   }

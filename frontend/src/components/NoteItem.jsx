@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { processNoteMetadata } from '../utils/helpers';
 
 const NoteItem = ({ note, onDelete }) => {
-  // Uses hoisted functions inside processNoteMetadata to calculate metadata
   const { formattedDate, readingTime } = processNoteMetadata(note);
 
   return (

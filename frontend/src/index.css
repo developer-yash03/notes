@@ -47,14 +47,12 @@ body {
   background-attachment: fixed;
 }
 
-/* App Layout */
 .app-layout {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Navbar */
 .navbar {
   position: sticky;
   top: 0;
@@ -127,7 +125,6 @@ body {
   transform: translateY(-1px);
 }
 
-/* User Profile Menu in Nav */
 .user-profile-menu {
   display: flex;
   align-items: center;
@@ -194,7 +191,6 @@ body {
   background: rgba(255, 255, 255, 0.15);
 }
 
-/* Main Content */
 .main-content {
   flex: 1;
   max-width: 1200px;
@@ -203,7 +199,6 @@ body {
   padding: 2rem 1.5rem;
 }
 
-/* Toast Notification (Event Loop Microtask/Macrotask Demo) */
 .toast-notification {
   position: fixed;
   bottom: 2rem;
@@ -238,7 +233,6 @@ body {
   }
 }
 
-/* Control Bar */
 .control-bar {
   display: flex;
   flex-wrap: wrap;
@@ -304,7 +298,6 @@ body {
   gap: 0.75rem;
 }
 
-/* Status Strip */
 .status-strip {
   display: flex;
   align-items: center;
@@ -326,14 +319,12 @@ body {
   font-weight: 500;
 }
 
-/* Notes Grid */
 .notes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.5rem;
 }
 
-/* Note Card */
 .note-card {
   background: var(--bg-card);
   backdrop-filter: blur(8px);
@@ -432,7 +423,6 @@ body {
   color: #fff;
 }
 
-/* Buttons */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -515,7 +505,6 @@ body {
   gap: 0.5rem;
 }
 
-/* Form Styles */
 .form-card-container, .auth-card-container {
   max-width: 600px;
   margin: 2rem auto;
@@ -657,7 +646,6 @@ textarea {
   gap: 0.75rem;
 }
 
-/* Auth Footer */
 .auth-footer {
   margin-top: 1.75rem;
   padding-top: 1.25rem;
@@ -677,7 +665,6 @@ textarea {
   text-decoration: underline;
 }
 
-/* Empty, Loading & Error States */
 .empty-state {
   text-align: center;
   padding: 4rem 2rem;
@@ -744,7 +731,6 @@ textarea {
   font-size: 0.92rem;
 }
 
-/* Footer */
 .footer {
   text-align: center;
   padding: 2rem 1.5rem;
