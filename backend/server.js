@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const notesRouter = require('./routes/notes');
+const authRouter = require('./routes/auth');
 const logger = require('./middleware/logger');
 const errorHandler = require('./middleware/errorHandler');
 
@@ -15,6 +16,7 @@ app.use(logger); // Custom logging middleware
 
 // Routes
 app.use('/api/notes', notesRouter);
+app.use('/api/auth', authRouter);
 
 // Error Handling Middleware
 app.use(errorHandler);
