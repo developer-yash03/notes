@@ -1,13 +1,22 @@
 import { Link } from 'react-router-dom';
 import { processNoteMetadata } from '../utils/helpers';
 
-const NoteItem = ({ note, onDelete }) => {
+const NoteItem = ({ note, onDelete, isSelected, onToggleSelect }) => {
   const { formattedDate, readingTime } = processNoteMetadata(note);
 
   return (
-    <div className="note-card">
+    <div className={`note-card ${isSelected ? 'selected' : ''}`}>
       <div className="note-card-header">
-        <span className="note-date">{formattedDate}</span>
+        <div className="note-select-wrapper">
+          <input
+            type="checkbox"
+            className="note-checkbox"
+            checked={Boolean(isSelected)}
+            onChange={() => onToggleSelect(note._id)}
+            aria-label={`Select ${note.title}`}
+          />
+          <span className="note-date">{formattedDate}</span>
+        </div>
         <span className="note-badge">{readingTime}</span>
       </div>
       <h3 className="note-title">{note.title}</h3>

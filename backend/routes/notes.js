@@ -37,6 +37,19 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+router.post('/batch-delete', async (req, res, next) => {
+  try {
+    const { ids } = req.body;
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ error: 'Please provide an array of note IDs to delete.' });
+    }
+    await Note.deleteMany({ _id: { $in: ids } });
+    res.status(200).json({ message: `Successfully deleted ${ids.length} notes.` });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.put('/:id', async (req, res, next) => {
   try {
     const { title, content } = req.body;
