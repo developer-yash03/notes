@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+// Client-side routing: Hooks for programmatic navigation, route parameters, and links
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { readNoteFileWithPromise } from '../utils/helpers';
 
@@ -11,7 +12,9 @@ const NoteForm = () => {
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
   
+  // Client-side routing: Programmatic route redirection hook
   const navigate = useNavigate();
+  // Client-side routing: Extracting dynamic URL parameter (:id)
   const { id } = useParams();
   const isEditing = Boolean(id);
 
@@ -62,6 +65,7 @@ const NoteForm = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
+      // Client-side routing: Redirecting user to home route after successful submission
       navigate('/');
     } catch (err) {
       setError(err.message);
@@ -104,6 +108,7 @@ const NoteForm = () => {
   return (
     <div className="form-card-container">
       <div className="form-header">
+        {/* Client-side routing: Link to navigate back to home route */}
         <Link to="/" className="back-link">
           ← Back to Notes
         </Link>
@@ -174,6 +179,7 @@ const NoteForm = () => {
           </div>
 
           <div className="submit-buttons">
+            {/* Client-side routing: Cancel action navigating back to root */}
             <Link to="/" className="btn-secondary">
               Cancel
             </Link>

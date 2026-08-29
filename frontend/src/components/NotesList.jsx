@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
+// Client-side routing: Link component enables seamless internal page transitions
 import { Link } from 'react-router-dom';
 import NoteItem from './NoteItem';
 import { 
@@ -120,10 +121,12 @@ const NotesList = () => {
     }
   };
 
+  // JavaScript Hoisting: Calling filterNotesList which is declared at the bottom of this file
   const filteredNotes = useMemo(() => {
     return filterNotesList(notes, debouncedSearch);
   }, [notes, debouncedSearch]);
 
+  // JavaScript Hoisting: Calling createNoteExportBlob which is declared at the bottom of this file
   const handleExport = () => {
     const exportData = selectedIds.length > 0
       ? notes.filter(n => selectedIds.includes(n._id))
@@ -177,6 +180,7 @@ const NotesList = () => {
           <button onClick={handleExport} className="btn-secondary" title="Export notes as JSON">
             📥 {selectedIds.length > 0 ? `Export (${selectedIds.length})` : 'Export Backup'}
           </button>
+          {/* Client-side routing: Navigate to note creation route without page reload */}
           <Link to="/new" className="btn-primary">
             ➕ Create Note
           </Link>
@@ -246,6 +250,7 @@ const NotesList = () => {
               : 'Capture your thoughts, ideas, and meeting notes in one place.'}
           </p>
           {!searchTerm && (
+            // Client-side routing: Navigate to create route on empty state
             <Link to="/new" className="btn-primary btn-large">
               Create Your First Note
             </Link>
@@ -268,6 +273,7 @@ const NotesList = () => {
   );
 };
 
+// JavaScript Hoisting: Function declaration hoisted to top of component scope
 function filterNotesList(notesList, query) {
   if (!query || !query.trim()) return notesList;
   const term = query.toLowerCase();
@@ -276,6 +282,7 @@ function filterNotesList(notesList, query) {
   );
 }
 
+// JavaScript Hoisting: Function declaration hoisted to top of component scope
 function createNoteExportBlob(notesData) {
   return new Blob([JSON.stringify(notesData, null, 2)], { type: 'application/json' });
 }

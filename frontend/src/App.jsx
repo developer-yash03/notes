@@ -1,3 +1,4 @@
+// Client-side routing: Importing React Router primitives for declarative navigation
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import NotesList from './components/NotesList';
 import NoteForm from './components/NoteForm';
@@ -12,12 +13,14 @@ function Navigation() {
   return (
     <header className="navbar">
       <div className="nav-container">
+        {/* Client-side routing: Declarative brand link */}
         <NavLink to="/" className="brand-logo">
           <span className="brand-icon">⚡</span>
           <span className="brand-title">Noter<span className="accent">.io</span></span>
         </NavLink>
 
         <nav className="nav-links">
+          {/* Client-side routing: Active route matching with NavLink */}
           <NavLink 
             to="/" 
             end 
@@ -67,11 +70,13 @@ function Navigation() {
 function App() {
   return (
     <AuthProvider>
+      {/* Client-side routing: Top-level Router provider managing URL history */}
       <Router>
         <div className="app-layout">
           <Navigation />
 
           <main className="main-content">
+            {/* Client-side routing: Route matching table with dynamic params and 404 fallback */}
             <Routes>
               <Route path="/" element={<NotesList />} />
               <Route path="/new" element={<NoteForm />} />

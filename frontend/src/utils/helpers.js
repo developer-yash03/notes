@@ -1,3 +1,4 @@
+// JavaScript Closures: Enclosing timeoutId in lexical scope
 export function createDebouncedSearch(callback, delay = 300) {
   let timeoutId = null;
 
@@ -11,6 +12,7 @@ export function createDebouncedSearch(callback, delay = 300) {
   };
 }
 
+// JavaScript Closures: Encapsulating private state variable inside returned functions
 export function createStatsTracker() {
   let actionCount = 0;
 
@@ -25,6 +27,7 @@ export function createStatsTracker() {
   };
 }
 
+// JavaScript Event Loop: Utilizing microtask queue (queueMicrotask) and macrotask queue (setTimeout)
 export function scheduleToastNotification(message, setNotification, duration = 3500) {
   queueMicrotask(() => {
     setNotification({ message, type: 'info', visible: true });
@@ -37,12 +40,14 @@ export function scheduleToastNotification(message, setNotification, duration = 3
   return timer;
 }
 
+// JavaScript Hoisting: Calling formatNoteDate and calculateReadingTime before their definitions below
 export function processNoteMetadata(note) {
   const formattedDate = formatNoteDate(note.createdAt);
   const readingTime = calculateReadingTime(note.content);
   return { formattedDate, readingTime };
 }
 
+// JavaScript Hoisting: Function declaration hoisted to the top of module scope
 function formatNoteDate(dateString) {
   if (!dateString) return 'Just now';
   const date = new Date(dateString);
@@ -53,6 +58,7 @@ function formatNoteDate(dateString) {
   });
 }
 
+// JavaScript Hoisting: Function declaration hoisted to the top of module scope
 function calculateReadingTime(text) {
   if (!text) return '1 min read';
   const wordsPerMinute = 200;
@@ -61,6 +67,7 @@ function calculateReadingTime(text) {
   return `${minutes} min read`;
 }
 
+// JavaScript Callbacks: Traditional callback-based FileReader pattern
 export function readNoteFileWithCallback(file, callback) {
   const reader = new FileReader();
   reader.onload = () => callback(null, reader.result);
@@ -68,6 +75,7 @@ export function readNoteFileWithCallback(file, callback) {
   reader.readAsText(file);
 }
 
+// JavaScript Promises vs Callbacks: Wrapping callback-driven FileReader into modern Promise
 export function readNoteFileWithPromise(file) {
   return new Promise((resolve, reject) => {
     readNoteFileWithCallback(file, (error, data) => {

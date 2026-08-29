@@ -1,4 +1,5 @@
 import { useState } from 'react';
+// Client-side routing: Link component and navigation hook
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -21,6 +22,7 @@ const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { login } = useAuth();
+  // Client-side routing: Hook to programmatically redirect user after registration
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -96,6 +98,7 @@ const Register = () => {
       }
 
       login(data.token, data.user);
+      // Client-side routing: Redirecting user to home route after successful registration
       navigate('/');
     } catch (err) {
       setServerError(err.message);
@@ -195,6 +198,7 @@ const Register = () => {
 
       <div className="auth-footer">
         <p>
+          {/* Client-side routing: Link navigating to login page */}
           Already have an account? <Link to="/login">Log in here</Link>
         </p>
       </div>
