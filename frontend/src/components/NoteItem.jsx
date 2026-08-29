@@ -1,3 +1,4 @@
+// Client-side routing: Link component for declarative path transitions
 import { Link } from 'react-router-dom';
 import { processNoteMetadata } from '../utils/helpers';
 
@@ -22,6 +23,7 @@ const NoteItem = ({ note, onDelete, isSelected, onToggleSelect }) => {
       <h3 className="note-title">{note.title}</h3>
       <p className="note-content">{note.content}</p>
       <div className="note-actions">
+        {/* Client-side routing: Dynamic link navigating to note edit route */}
         <Link to={`/edit/${note._id}`} className="btn-edit" aria-label="Edit Note">
           <span className="icon">✏️</span> Edit
         </Link>
