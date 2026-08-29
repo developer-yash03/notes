@@ -73,15 +73,11 @@ const NotesList = () => {
   };
 
   const filteredNotes = useMemo(() => {
-    if (!debouncedSearch.trim()) return notes;
-    const term = debouncedSearch.toLowerCase();
-    return notes.filter(
-      note => note.title.toLowerCase().includes(term) || note.content.toLowerCase().includes(term)
-    );
+    return filterNotesList(notes, debouncedSearch);
   }, [notes, debouncedSearch]);
 
   const handleExport = () => {
-    const blob = new Blob([JSON.stringify(notes, null, 2)], { type: 'application/json' });
+    const blob = createNoteExportBlob(notes);
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -177,5 +173,17 @@ const NotesList = () => {
     </div>
   );
 };
+
+function filterNotesList(notesList, query) {
+  if (!query || !query.trim()) return notesList;
+  const term = query.toLowerCase();
+  return notesList.filter(
+    note => note.title.toLowerCase().includes(term) || note.content.toLowerCase().includes(term)
+  );
+}
+
+function createNoteExportBlob(notesData) {
+  return new Blob([JSON.stringify(notesData, null, 2)], { type: 'application/json' });
+}
 
 export default NotesList;

@@ -3,6 +3,7 @@ import NotesList from './components/NotesList';
 import NoteForm from './components/NoteForm';
 import Register from './components/Register';
 import Login from './components/Login';
+import NotFound from './components/NotFound';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 function Navigation() {
@@ -77,12 +78,13 @@ function App() {
               <Route path="/edit/:id" element={<NoteForm />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
 
           <footer className="footer">
             <p>
-              Full-Stack React & Express Notes App • Demonstrating Authentication, JWT, Password Hashing, Input Sanitization & Validations
+              Full-Stack React & Express Notes App • Demonstrating Client-Side Routing & JavaScript Hoisting
             </p>
           </footer>
         </div>
